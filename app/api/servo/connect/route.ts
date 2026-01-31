@@ -4,10 +4,9 @@ import { getSerialPort, checkPortStatus } from "@/lib/serial";
 export async function POST() {
   try {
     const portPath = process.env.ARDUINO_PORT || "COM6";
-    
-    // Check current status
+
     const status = await checkPortStatus(portPath);
-    
+
     if (status.open && status.available) {
       return NextResponse.json({
         success: true,
@@ -16,12 +15,10 @@ export async function POST() {
       });
     }
 
-    // Try to open the port
     await getSerialPort();
-    
-    // Verify it's open
+
     const newStatus = await checkPortStatus(portPath);
-    
+
     if (newStatus.open) {
       return NextResponse.json({
         success: true,

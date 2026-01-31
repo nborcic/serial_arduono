@@ -4,10 +4,9 @@ import { closeSerialPort, checkPortStatus } from "@/lib/serial";
 export async function POST() {
   try {
     const portPath = process.env.ARDUINO_PORT || "COM6";
-    
-    // Check current status
+
     const status = await checkPortStatus(portPath);
-    
+
     if (!status.open) {
       return NextResponse.json({
         success: true,
@@ -16,12 +15,8 @@ export async function POST() {
       });
     }
 
-    // Close the port
     await closeSerialPort();
-    
-    // Verify it's closed
-    const newStatus = await checkPortStatus(portPath);
-    
+
     return NextResponse.json({
       success: true,
       message: `Port ${portPath} disconnected successfully`,

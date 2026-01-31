@@ -16,10 +16,10 @@ export async function POST(request: NextRequest) {
 
     const command = commandMap[direction];
     if (!command) {
-      return NextResponse.json(
-        { success: false, error: "Invalid direction" },
-        { status: 400 }
-      );
+      return NextResponse.json({
+        success: false,
+        error: "Invalid direction"
+      }, { status: 400 });
     }
 
     await sendCommand(command);
@@ -30,9 +30,9 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error("Error controlling servo:", error);
     return NextResponse.json(
-      { 
-        success: false, 
-        error: error instanceof Error ? error.message : "Failed to control servo" 
+      {
+        success: false,
+        error: error instanceof Error ? error.message : "Failed to control servo"
       },
       { status: 500 }
     );
